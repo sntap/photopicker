@@ -141,7 +141,13 @@ public class PhotoPickerActivity extends AppCompatActivity{
                         if(mode == MODE_MULTI){
                             // 判断选择数量问题
                             if(mDesireImageCount == resultList.size()-1){
-                                Toast.makeText(mCxt, R.string.msg_amount_limit, Toast.LENGTH_SHORT).show();
+
+                                String info = languageList.get(11);
+                                if(info==null){
+                                    info = getResources().getString(R.string.msg_amount_limit); ;
+                                }
+
+                                Toast.makeText(mCxt, info, Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         }
@@ -187,6 +193,7 @@ public class PhotoPickerActivity extends AppCompatActivity{
                 PhotoPreviewIntent intent = new PhotoPreviewIntent(mCxt);
                 intent.setCurrentItem(0);
                 intent.setPhotoPaths(resultList);
+                intent.setLanguage(languageList);
                 startActivityForResult(intent, PhotoPreviewActivity.REQUEST_PREVIEW);
             }
         });
@@ -359,7 +366,12 @@ public class PhotoPickerActivity extends AppCompatActivity{
             Intent intent = captureManager.dispatchTakePictureIntent();
             startActivityForResult(intent, ImageCaptureManager.REQUEST_TAKE_PHOTO);
         } catch (IOException e) {
-            Toast.makeText(mCxt, R.string.msg_no_camera, Toast.LENGTH_SHORT).show();
+
+            String info = languageList.get(10);
+            if(info==null){
+                info = getResources().getString(R.string.msg_no_camera); ;
+            }
+            Toast.makeText(mCxt, info, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -378,7 +390,12 @@ public class PhotoPickerActivity extends AppCompatActivity{
                 } else {
                     // 判断选择数量问题
                     if(mDesireImageCount == resultList.size()){
-                        Toast.makeText(mCxt, R.string.msg_amount_limit, Toast.LENGTH_SHORT).show();
+                        String info = languageList.get(11);
+                        if(info==null){
+                            info = getResources().getString(R.string.msg_amount_limit); ;
+                        }
+
+                        Toast.makeText(mCxt, info, Toast.LENGTH_SHORT).show();
                         return;
                     }
                     resultList.add(image.path);
@@ -406,15 +423,17 @@ public class PhotoPickerActivity extends AppCompatActivity{
         boolean hasSelected = resultList.size() > 0;
         menuDoneItem.setVisible(hasSelected);
         btnPreview.setEnabled(hasSelected);
-        if(hasSelected){
-            btnPreview.setText(getResources().getString(R.string.preview) + "(" + (resultList.size()) + ")");
-        } else {
-            btnPreview.setText(getResources().getString(R.string.preview));
-        }
+
 
         String previewName = languageList.get(0);
         if(previewName==null) {
             previewName = getResources().getString(R.string.preview);
+        }
+
+        if(hasSelected){
+            btnPreview.setText(previewName + "(" + (resultList.size()) + ")");
+        } else {
+            btnPreview.setText(previewName);
         }
 
     }

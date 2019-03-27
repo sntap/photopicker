@@ -60,11 +60,18 @@ public class MainActivity extends AppCompatActivity {
         cols = cols < 3 ? 3 : cols;
         gridView.setNumColumns(cols);
 
-        langLists.add("preview");//预览 0
-        langLists.add("all_photos");//所有图片 1
-        langLists.add("finish");//完成 2
-        langLists.add("take_a_photo");//拍张照片 3
-        langLists.add("select_image");//选择图片 4
+        langLists.add("0000");//预览 0
+        langLists.add("11111");//所有图片 1
+        langLists.add("22222");//完成 2
+        langLists.add("33333");//拍张照片 3
+        langLists.add("44444");//选择图片 4
+        langLists.add("删除了一张图片5");//删除了一张图片 5
+        langLists.add("确定删除嘛6");//确定删除嘛 6
+        langLists.add("确3");//确定 7
+        langLists.add("取消2");//取消 8
+        langLists.add("撤销1");//撤销 9
+        langLists.add("无法启用系统相机");//无法启用系统相机 10
+        langLists.add("已经达到最高选择数量");//已经到达最高选择数量 11
 
         // preview
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -35,6 +35,13 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPage
     private PhotoPagerAdapter mPagerAdapter;
     private int currentItem = 0;
 
+
+
+    /** 默认选择的数据集 */
+    public static final String EXTRA_LANGUAGE_LIST = "language_list";
+    // 结果数据
+    private ArrayList<String> languageList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +55,12 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPage
         if(pathArr != null){
             paths.addAll(pathArr);
         }
+
+        ArrayList<String> lantmp = getIntent().getStringArrayListExtra(EXTRA_LANGUAGE_LIST);
+        if(lantmp != null && lantmp.size() > 0) {
+            languageList.addAll(lantmp);
+        }
+        getSupportActionBar().setTitle(languageList.get(0));
 
         currentItem = getIntent().getIntExtra(EXTRA_CURRENT_ITEM, 0);
 
@@ -120,21 +133,48 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPage
         if(item.getItemId() == R.id.action_discard){
             final int index = mViewPager.getCurrentItem();
             final String deletedPath =  paths.get(index);
-            Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.deleted_a_photo,
+            String deleteinfo = languageList.get(5);
+            if(deleteinfo==null){
+                deleteinfo = getResources().getString(R.string.deleted_a_photo); ;
+            }
+
+            String confirminfo = languageList.get(6);
+            if(confirminfo==null){
+                confirminfo = getResources().getString(R.string.confirm_to_delete); ;
+            }
+
+            String sureinfo = languageList.get(7);
+            if(sureinfo==null){
+                sureinfo = getResources().getString(R.string.yes);
+            }
+
+            String cancelinfo = languageList.get(8);
+            if(cancelinfo==null){
+                cancelinfo = getResources().getString(R.string.cancel);
+            }
+
+            String undoinfo = languageList.get(9);
+            if(undoinfo==null){
+                undoinfo = getResources().getString(R.string.undo);
+            }
+
+
+
+            Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), deleteinfo,
                     Snackbar.LENGTH_LONG);
             if(paths.size() <= 1){
                 // 最后一张照片弹出删除提示
                 // show confirm dialog
                 new AlertDialog.Builder(this)
-                        .setTitle(R.string.confirm_to_delete)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        .setTitle(confirminfo)
+                        .setPositiveButton(sureinfo, new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                                 paths.remove(index);
                                 onBackPressed();
                             }
                         })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(cancelinfo, new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                             }
@@ -146,7 +186,7 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPage
                 mPagerAdapter.notifyDataSetChanged();
             }
 
-            snackbar.setAction(R.string.undo, new View.OnClickListener() {
+            snackbar.setAction(undoinfo, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (paths.size() > 0) {

@@ -3,6 +3,7 @@ package com.lidong.photopicker.intent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.lidong.photopicker.PhotoPickerActivity;
 import com.lidong.photopicker.PhotoPreviewActivity;
 
 import java.util.ArrayList;
@@ -31,5 +32,10 @@ public class PhotoPreviewIntent extends Intent{
      */
     public void setCurrentItem(int currentItem){
         this.putExtra(PhotoPreviewActivity.EXTRA_CURRENT_ITEM, currentItem);
+    }
+
+
+    public void setLanguage(ArrayList<String> lanList){
+        this.putStringArrayListExtra(PhotoPreviewActivity.EXTRA_LANGUAGE_LIST, lanList);
     }
 }
