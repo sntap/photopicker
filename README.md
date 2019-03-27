@@ -1,5 +1,6 @@
 1.0.3
 
+```java
 langLists.add("预览");//预览 0
 langLists.add("所有图片");//所有图片 1
 langLists.add("完成");//完成 2
@@ -12,6 +13,7 @@ langLists.add("取消");//取消 8
 langLists.add("撤销");//撤销 9
 langLists.add("无法启用系统相机");//无法启用系统相机 10
 langLists.add("已经达到最高选择数量");//已经到达最高选择数量 11
+```
 
 # PhotoPicker
 
