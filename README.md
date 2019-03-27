@@ -1,3 +1,18 @@
+1.0.3
+
+langLists.add("预览");//预览 0
+langLists.add("所有图片");//所有图片 1
+langLists.add("完成");//完成 2
+langLists.add("拍张照片");//拍张照片 3
+langLists.add("选择图片");//选择图片 4
+langLists.add("删除了一张图片");//删除了一张图片 5
+langLists.add("确定删除嘛");//确定删除嘛 6
+langLists.add("确定");//确定 7
+langLists.add("取消");//取消 8
+langLists.add("撤销");//撤销 9
+langLists.add("无法启用系统相机");//无法启用系统相机 10
+langLists.add("已经达到最高选择数量");//已经到达最高选择数量 11
+
 # PhotoPicker
 
 基于 [donglua/PhotoPicker](https://github.com/donglua/PhotoPicker)、[lovetuzitong/MultiImageSelector](https://github.com/lovetuzitong/MultiImageSelector) 修改的一个图片选择类库。
