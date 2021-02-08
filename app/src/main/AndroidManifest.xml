@@ -24,10 +24,10 @@
         </activity>
 
         <activity
-            android:name="com.lidong.photopicker.PhotoPickerActivity"
+            android:name="com.sntap.photopicker.PhotoPickerActivity"
             android:theme="@style/PhotoPickerTheme"
             android:configChanges="orientation|screenSize"/>
-        <activity android:name="com.lidong.photopicker.PhotoPreviewActivity"
+        <activity android:name="com.sntap.photopicker.PhotoPreviewActivity"
             android:theme="@style/PhotoPickerTheme"/>
     </application>
 

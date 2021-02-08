@@ -23,12 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.lidong.photopicker.ImageCaptureManager;
-import com.lidong.photopicker.PhotoPickerActivity;
-import com.lidong.photopicker.PhotoPreviewActivity;
-import com.lidong.photopicker.SelectModel;
-import com.lidong.photopicker.intent.PhotoPickerIntent;
-import com.lidong.photopicker.intent.PhotoPreviewIntent;
+import com.sntap.photopicker.ImageCaptureManager;
+import com.sntap.photopicker.PhotoPickerActivity;
+import com.sntap.photopicker.PhotoPreviewActivity;
+import com.sntap.photopicker.SelectModel;
+import com.sntap.photopicker.intent.PhotoPickerIntent;
+import com.sntap.photopicker.intent.PhotoPreviewIntent;
 
 import org.json.JSONArray;
 
@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 //                        ;
                 Glide.with(mContext)
                         .load(path)
-                        .apply(RequestOptions.placeholderOf(com.lidong.photopicker.R.mipmap.default_error).centerCrop())
+                        .apply(RequestOptions.placeholderOf(R.mipmap.default_error).centerCrop())
                         .into(holder.image);
 //                Glide.with(MainActivity.this)
 //                        .load(path)

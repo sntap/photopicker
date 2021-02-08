@@ -1,11 +1,11 @@
-package com.lidong.photopicker.intent;
+package com.sntap.photopicker.intent;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.lidong.photopicker.ImageConfig;
-import com.lidong.photopicker.PhotoPickerActivity;
-import com.lidong.photopicker.SelectModel;
+import com.sntap.photopicker.ImageConfig;
+import com.sntap.photopicker.PhotoPickerActivity;
+import com.sntap.photopicker.SelectModel;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.lidong.photopicker;
+package com.sntap.photopicker;
 
 import android.content.Context;
 import android.content.Intent;

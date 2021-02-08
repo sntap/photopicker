@@ -1,4 +1,4 @@
-package com.lidong.photopicker.widget;
+package com.sntap.photopicker.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

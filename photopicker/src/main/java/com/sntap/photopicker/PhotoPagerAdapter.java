@@ -1,4 +1,4 @@
-package com.lidong.photopicker;
+package com.sntap.photopicker;
 
 import android.content.Context;
 import android.net.Uri;
@@ -66,7 +66,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     Glide.with(mContext)
             .load(uri)
-            .apply(RequestOptions.placeholderOf(com.lidong.photopicker.R.mipmap.default_error))
+            .apply(RequestOptions.placeholderOf(R.mipmap.default_error))
             .into(imageView);
 
     imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {

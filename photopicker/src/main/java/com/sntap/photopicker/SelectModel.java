@@ -1,4 +1,4 @@
-package com.lidong.photopicker;
+package com.sntap.photopicker;
 
 /**
  * 照片选择类型

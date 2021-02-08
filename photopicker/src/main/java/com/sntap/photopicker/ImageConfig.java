@@ -1,4 +1,4 @@
-package com.lidong.photopicker;
+package com.sntap.photopicker;
 
 import android.os.Parcel;
 import android.os.Parcelable;

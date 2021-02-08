@@ -1,4 +1,4 @@
-package com.lidong.photopicker;
+package com.sntap.photopicker;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.lidong.photopicker.widget.ViewPagerFixed;
+import com.sntap.photopicker.widget.ViewPagerFixed;
 
 import java.util.ArrayList;
 

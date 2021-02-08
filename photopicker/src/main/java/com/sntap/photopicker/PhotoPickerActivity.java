@@ -1,4 +1,4 @@
-package com.lidong.photopicker;
+package com.sntap.photopicker;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +25,7 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import com.lidong.photopicker.intent.PhotoPreviewIntent;
+import com.sntap.photopicker.intent.PhotoPreviewIntent;
 
 import java.io.File;
 import java.io.IOException;
