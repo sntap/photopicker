@@ -1,8 +1,12 @@
 package com.lidong.photopickersample;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lidong.photopicker.ImageCaptureManager;
 import com.lidong.photopicker.PhotoPickerActivity;
 import com.lidong.photopicker.PhotoPreviewActivity;
@@ -25,13 +33,18 @@ import com.lidong.photopicker.intent.PhotoPreviewIntent;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * @
  * @author lidong
  * @date 2016-02-29
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks  {
 
     private static final int REQUEST_CAMERA_CODE = 10;
     private static final int REQUEST_PREVIEW_CODE = 20;
@@ -44,9 +57,63 @@ public class MainActivity extends AppCompatActivity {
     private String depp;
     private EditText textView;
     private String TAG =MainActivity.class.getSimpleName();
+    private Context mContext;
 
 
     private ArrayList<String> langLists = new ArrayList<>();
+
+
+    String PERMISSION_STORAGE_MSG = "请授予权限，否则影响部分使用功能";
+    String[] PERMS = {Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //将结果转发给EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    /**
+     * 申请成功时调用
+     * @param requestCode 请求权限的唯一标识码
+     * @param perms 一系列权限
+     */
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    /**
+     * 申请拒绝时调用
+     * @param requestCode 请求权限的唯一标识码
+     * @param perms 一系列权限
+     */
+    @Override
+    public void onPermissionsDenied(int requestCode,List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+    @AfterPermissionGranted(10001)
+    public void onPermissionSuccess(){
+        Toast.makeText(this,"AfterPermission调用成功了",Toast.LENGTH_SHORT).show();
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+//            //从设置页面返回，判断权限是否申请。
+//            if (EasyPermissions.hasPermissions(this, PERMS)) {
+//                Toast.makeText(this, "权限申请成功!", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(this, "权限申请失败!", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         mButton = (Button) findViewById(R.id.button);
         textView= (EditText)findViewById(R.id.et_context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy( builder.build() );
+        }
 
         int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
         cols = cols < 3 ? 3 : cols;
@@ -73,24 +144,53 @@ public class MainActivity extends AppCompatActivity {
         langLists.add("无法启用系统相机");//无法启用系统相机 10
         langLists.add("已经达到最高选择数量");//已经到达最高选择数量 11
 
+        mContext = this;
+
+
+
         // preview
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String imgs = (String) parent.getItemAtPosition(position);
-                if ("000000".equals(imgs) ){
-                    PhotoPickerIntent intent = new PhotoPickerIntent(MainActivity.this);
-                    intent.setSelectModel(SelectModel.MULTI);
-                    intent.setShowCarema(true); // 是否显示拍照
-                    intent.setMaxTotal(6); // 最多选择照片数量，默认为6
-                    intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
-                    intent.setLanguage(langLists);
-                    startActivityForResult(intent, REQUEST_CAMERA_CODE);
-                }else{
-                        PhotoPreviewIntent intent = new PhotoPreviewIntent(MainActivity.this);
-                        intent.setCurrentItem(position);
-                        intent.setPhotoPaths(imagePaths);
-                        startActivityForResult(intent, REQUEST_PREVIEW_CODE);
+                try {
+
+                    int PERMISSION_STORAGE_CODE = 10001;
+                    if (EasyPermissions.hasPermissions(mContext, PERMS)) {
+                        // 已经申请过权限，做想做的事
+                        String imgs = (String) parent.getItemAtPosition(position);
+                        if ("000000".equals(imgs)) {
+                            PhotoPickerIntent intent = new PhotoPickerIntent(MainActivity.this);
+                            intent.setSelectModel(SelectModel.MULTI);
+                            intent.setShowCarema(true); // 是否显示拍照
+                            intent.setMaxTotal(6); // 最多选择照片数量，默认为6
+                            intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
+                            intent.setLanguage(langLists);
+                            startActivityForResult(intent, REQUEST_CAMERA_CODE);
+                        } else {
+                            PhotoPreviewIntent intent = new PhotoPreviewIntent(MainActivity.this);
+                            intent.setCurrentItem(position);
+                            intent.setLanguage(langLists);
+                            if (imagePaths.contains("000000")) {
+                                imagePaths.remove("000000");
+                            }
+                            intent.setPhotoPaths(imagePaths);
+                            startActivityForResult(intent, REQUEST_PREVIEW_CODE);
+                        }
+
+                    } else {
+                        // 没有申请过权限，现在去申请
+                        /**
+                         *@param host Context对象
+                         *@param rationale  权限弹窗上的提示语。
+                         *@param requestCode 请求权限的唯一标识码
+                         *@param perms 一系列权限
+                         */
+                        EasyPermissions.requestPermissions((Activity) mContext, PERMISSION_STORAGE_MSG, PERMISSION_STORAGE_CODE, PERMS);
+                    }
+
+                }
+                catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         });
@@ -122,6 +222,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            //从设置页面返回，判断权限是否申请。
+            if (EasyPermissions.hasPermissions(this, PERMS)) {
+                Toast.makeText(this, "权限申请成功!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "权限申请失败!", Toast.LENGTH_SHORT).show();
+
+            }
+        }
         if(resultCode == RESULT_OK) {
             switch (requestCode) {
                 // 选择照片
@@ -199,13 +308,32 @@ public class MainActivity extends AppCompatActivity {
             if (path.equals("000000")){
                 holder.image.setImageResource(R.mipmap.ic_launcher);
             }else {
-                Glide.with(MainActivity.this)
+//                RequestOptions options = new RequestOptions()
+//                        .placeholder(R.mipmap.ic_launcher)                //加载成功之前占位图
+//                        .error(R.mipmap.ic_launcher)                    //加载错误之后的错误图
+//                        .override(400,400)                                //指定图片的尺寸
+//                        //指定图片的缩放类型为fitCenter （等比例缩放图片，宽或者是高等于ImageView的宽或者是高。）
+////                        .fitCenter()
+//                        //指定图片的缩放类型为centerCrop （等比例缩放图片，直到图片的狂高都大于等于ImageView的宽度，然后截取中间的显示。）
+//                        .centerCrop()
+//                        .circleCrop()//指定图片的缩放类型为centerCrop （圆形）
+//                        .skipMemoryCache(true)                            //跳过内存缓存
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)        //缓存所有版本的图像
+//                        .diskCacheStrategy(DiskCacheStrategy.NONE)        //跳过磁盘缓存
+//                        .diskCacheStrategy(DiskCacheStrategy.DATA)        //只缓存原来分辨率的图片
+//                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)    //只缓存最终的图片
+//                        ;
+                Glide.with(mContext)
                         .load(path)
-                        .placeholder(R.mipmap.default_error)
-                        .error(R.mipmap.default_error)
-                        .centerCrop()
-                        .crossFade()
+                        .apply(RequestOptions.placeholderOf(com.lidong.photopicker.R.mipmap.default_error).centerCrop())
                         .into(holder.image);
+//                Glide.with(MainActivity.this)
+//                        .load(path)
+//                        .placeholder(R.mipmap.default_error)
+//                        .error(R.mipmap.default_error)
+//                        .centerCrop()
+//                        .crossFade()
+//                        .into(holder.image);
             }
             return convertView;
         }

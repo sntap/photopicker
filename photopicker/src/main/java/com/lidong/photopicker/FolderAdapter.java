@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,11 +81,15 @@ public class FolderAdapter extends BaseAdapter {
                 if(mFolders.size()>0){
                     Folder f = mFolders.get(0);
 
+//                    Glide.with(mContext)
+//                            .load(new File(f.cover.path))
+//                            .error(R.mipmap.default_error)
+//                            .override(mImageSize, mImageSize)
+//                            .centerCrop()
+//                            .into(holder.cover);
                     Glide.with(mContext)
                             .load(new File(f.cover.path))
-                            .error(R.mipmap.default_error)
-                            .override(mImageSize, mImageSize)
-                            .centerCrop()
+                            .apply(RequestOptions.placeholderOf(R.mipmap.default_error))
                             .into(holder.cover);
                 }
             }else {
@@ -136,14 +141,18 @@ public class FolderAdapter extends BaseAdapter {
         void bindData(Folder data) {
             name.setText(data.name);
             size.setText(data.images.size() + "张");
-            // 显示图片
             Glide.with(mContext)
                     .load(new File(data.cover.path))
-                    .placeholder(R.mipmap.default_error)
-                    .error(R.mipmap.default_error)
-                    .override(mImageSize, mImageSize)
-                    .centerCrop()
+                    .apply(RequestOptions.placeholderOf(R.mipmap.default_error))
                     .into(cover);
+            // 显示图片
+//            Glide.with(mContext)
+//                    .load(new File(data.cover.path))
+//                    .placeholder(R.mipmap.default_error)
+//                    .error(R.mipmap.default_error)
+//                    .override(mImageSize, mImageSize)
+//                    .centerCrop()
+//                    .into(cover);
         }
     }
 
