@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/photo-Picker.iml" filepath="$PROJECT_DIR$/photo-Picker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/photo-Picker.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/photo-Picker.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/photopicker/photo-Picker.photopicker.iml" filepath="$PROJECT_DIR$/.idea/modules/photopicker/photo-Picker.photopicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/photopicker.iml" filepath="$PROJECT_DIR$/.idea/modules/photopicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/photopicker.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/photopicker.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/photopicker.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/photopicker.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/photopicker.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/photopicker.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/photopicker.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/photopicker.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.iml" filepath="$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.main.iml" filepath="$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/photopicker/photopicker.photopicker.unitTest.iml" />
     </modules>
   </component>
 </project>

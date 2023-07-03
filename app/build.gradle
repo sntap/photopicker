@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.0'
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.lidong.photopickersample"
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion 29
+        targetSdkVersion 44
         versionCode 1
         versionName "1.0"
     }
@@ -18,6 +17,7 @@ android {
         }
     }
     ndkVersion '20.0.5594570'
+    namespace 'com.lidong.photopickersample'
 }
 
 dependencies {
@@ -30,6 +30,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
     implementation 'io.reactivex:rxjava:1.1.0'
     implementation 'io.reactivex:rxandroid:1.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
     implementation 'pub.devrel:easypermissions:2.0.1'
 }
